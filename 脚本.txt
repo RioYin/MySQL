@@ -1,0 +1,798 @@
+Create database duel
+
+
+Create table 决斗者
+(
+ 姓名 char(20) not null unique,
+ 年龄 int default 18,
+ 性别 char(2) check(性别 in('男' ,'女') ) ,
+ Primary key(姓名)
+)
+
+Create table 决斗盘
+(
+ 设备名称 char(20) not null unique,
+ 类型 char(20),
+ Primary key(设备名称)
+)
+
+Create table 所属
+(
+ 设备名称 char(20) not null unique,
+ 姓名 char(20),
+ Primary key(设备名称),
+ Foreign key(设备名称) references 决斗盘(设备名称),
+ Foreign key(姓名) references 决斗者(姓名)
+)
+
+Create table 卡组
+(
+ 卡组名称 char(20) not null unique,
+ 卡组核心 char(20) not null unique,
+ Primary key(卡组名称,卡组核心)
+)
+
+Create table 持有
+(
+ 姓名 char(20) not null,
+ 卡组名称 char(20) not null,
+ 卡组核心 char(20) not null,
+ Primary key(姓名,卡组名称,卡组核心) ,
+ Foreign key(卡组名称) references 卡组(卡组名称) ,
+ Foreign key(卡组核心) references 卡组(卡组核心) ,
+ Foreign key(姓名) references 决斗者(姓名)
+)
+
+Create table 卡片
+(
+ 名字 char(20) not null unique,
+ 颜色 char(20),
+ Primary key(名字)
+)
+
+Create table 包含
+(
+ 卡组名称 char(20) not null,
+ 卡组核心 char(20) not null,
+ 名字 char(20) not null,
+ Primary key(卡组名称,卡组核心,名字) ,
+ Foreign key(卡组名称) references 卡组(卡组名称) ,
+ Foreign key(卡组核心) references 卡组(卡组核心) ,
+ Foreign key(名字) references 卡片(名字)
+)
+
+Create table 拥有
+(
+ 姓名 char(20) not null,
+ 名字 char(20) not null,
+ Primary key(姓名,名字) ,
+ Foreign key(姓名) references 决斗者(姓名) ,
+ Foreign key(名字) references 卡片(名字)
+)
+
+Create table 陷阱卡
+(
+ 名字 char(20) not null unique,
+ 种类 char(20),
+ 颜色 char(20),
+ Primary key(名字)
+)
+
+Create table 怪兽卡
+(
+ 名字 char(20) not null unique,
+ 种类 char(20),
+ 颜色 char(20),
+ 攻击力 int default 0,
+ 守备力 int default 0,
+ Primary key(名字)
+)
+
+Create table 魔法卡
+(
+ 名字 char(20) not null unique,
+ 种类 char(20),
+ 颜色 char(20),
+ Primary key(名字)
+)
+
+Insert into
+决斗者(姓名,年龄,性别)
+Values('武藤游戏',17,'男')
+
+Insert into
+决斗者(姓名,年龄,性别)
+Values('海马濑人',17,'男')
+
+Insert into
+决斗者(姓名,年龄,性别)
+Values('达兹',null,'男')
+
+Insert into
+决斗者(姓名,年龄,性别)
+Values('游城十代',18,'男')
+
+Insert into
+决斗者(姓名,年龄,性别)
+Values('丸藤亮',20,'男')
+
+Insert into
+决斗者(姓名,年龄,性别)
+Values('爱德菲尼克斯',17,'男')
+
+Insert into
+决斗者(姓名,年龄,性别)
+Values('不动游星',18,'男')
+
+Insert into
+决斗者(姓名,年龄,性别)
+Values('龙可',11,'女')
+
+Insert into
+决斗者(姓名,年龄,性别)
+Values('九十九游马',13,'男')
+
+Insert into
+决斗者(姓名,年龄,性别)
+Values('榊游矢',14,'男')
+
+Insert into
+决斗盘(设备名称,类型)
+Values('决斗场','站立式')
+
+Insert into
+决斗盘(设备名称,类型)
+Values('初世代决斗盘','站立式')
+
+Insert into
+决斗盘(设备名称,类型)
+Values('次世代决斗盘','站立式')
+
+Insert into
+决斗盘(设备名称,类型)
+Values('多玛式决斗盘','站立式')
+
+Insert into
+决斗盘(设备名称,类型)
+Values('次世代决斗盘改进版','站立式')
+
+Insert into
+决斗盘(设备名称,类型)
+Values('异地决斗场','站立式')
+
+Insert into
+决斗盘(设备名称,类型)
+Values('D轮','骑乘式')
+
+Insert into
+决斗盘(设备名称,类型)
+Values('滑板式决斗盘','骑乘式')
+
+Insert into
+决斗盘(设备名称,类型)
+Values('D视镜','站立式')
+
+Insert into
+决斗盘(设备名称,类型)
+Values('激光决斗盘','动作式')
+
+Insert into
+所属(设备名称,姓名)
+Values('初世代决斗盘','海马濑人')
+
+Insert into
+所属(设备名称,姓名)
+Values('决斗场','武藤游戏')
+
+Insert into
+所属(设备名称,姓名)
+Values('次世代决斗盘','武藤游戏')
+
+Insert into
+所属(设备名称,姓名)
+Values('多玛式决斗盘','达兹')
+
+Insert into
+所属(设备名称,姓名)
+Values('次世代决斗盘改进版','游城十代')
+
+Insert into
+所属(设备名称,姓名)
+Values('异地决斗场','丸藤亮')
+
+Insert into
+所属(设备名称,姓名)
+Values('D轮','不动游星')
+
+Insert into
+所属(设备名称,姓名)
+Values('滑板式决斗盘','龙可')
+
+Insert into
+所属(设备名称,姓名)
+Values('D视镜','九十九游马')
+
+Insert into
+所属(设备名称,姓名)
+Values('激光决斗盘','榊游矢')
+
+Insert into
+卡组(卡组名称,卡组核心)
+Values('黑魔术卡组','黑魔术师')
+
+Insert into
+卡组(卡组名称,卡组核心)
+Values('青眼卡组','青眼白龙')
+
+Insert into
+卡组(卡组名称,卡组核心)
+Values('奥利哈刚卡组','奥利哈刚的结界')
+
+Insert into
+卡组(卡组名称,卡组核心)
+Values('元素英雄卡组','元素英雄新宇侠')
+
+Insert into
+卡组(卡组名称,卡组核心)
+Values('电子流卡组','电子龙')
+
+Insert into
+卡组(卡组名称,卡组核心)
+Values('命运英雄卡组','命运英雄血魔D')
+
+Insert into
+卡组(卡组名称,卡组核心)
+Values('同调士卡组','星尘龙')
+
+Insert into
+卡组(卡组名称,卡组核心)
+Values('妖精卡组','古代妖精龙')
+
+Insert into
+卡组(卡组名称,卡组核心)
+Values('希望皇卡组','No.39 希望皇霍普')
+
+Insert into
+卡组(卡组名称,卡组核心)
+Values('娱乐伙伴卡组','异色眼灵摆龙')
+
+Insert into
+持有(姓名,卡组名称,卡组核心)
+Values('武藤游戏','黑魔术卡组','黑魔术师')
+
+Insert into
+持有(姓名,卡组名称,卡组核心)
+Values('海马濑人','青眼卡组','青眼白龙')
+
+Insert into
+持有(姓名,卡组名称,卡组核心)
+Values('达兹','奥利哈刚卡组','奥利哈刚的结界')
+
+Insert into
+持有(姓名,卡组名称,卡组核心)
+Values('游城十代','元素英雄卡组','元素英雄新宇侠')
+
+Insert into
+持有(姓名,卡组名称,卡组核心)
+Values('丸藤亮','电子流卡组','电子龙')
+
+Insert into
+持有(姓名,卡组名称,卡组核心)
+Values('爱德菲尼克斯','命运英雄卡组','命运英雄血魔D')
+
+Insert into
+持有(姓名,卡组名称,卡组核心)
+Values('不动游星','同调士卡组','星尘龙')
+
+Insert into
+持有(姓名,卡组名称,卡组核心)
+Values('龙可','妖精卡组','古代妖精龙')
+
+Insert into
+持有(姓名,卡组名称,卡组核心)
+Values('九十九游马','希望皇卡组','No.39 希望皇霍普')
+
+Insert into
+持有(姓名,卡组名称,卡组核心)
+Values('榊游矢','娱乐伙伴卡组','异色眼灵摆龙')
+
+Insert into
+卡片(名字,颜色)
+values('黑魔术师','黄色')
+
+Insert into
+卡片(名字,颜色)
+values('死者苏生','绿色')
+
+Insert into
+卡片(名字,颜色)
+values('神圣防护罩-反射镜力','红色')
+
+Insert into
+卡片(名字,颜色)
+values('巨大化','绿色')
+
+Insert into
+卡片(名字,颜色)
+values('我我我枪手','黑色')
+
+Insert into
+卡片(名字,颜色)
+values('超融合','绿色')
+
+Insert into
+卡片(名字,颜色)
+values('幽狱之时计塔','绿色')
+
+Insert into
+卡片(名字,颜色)
+values('镜子骑士之呼唤','蓝色')
+
+Insert into
+卡片(名字,颜色)
+values('神之宣告','红色')
+
+Insert into
+卡片(名字,颜色)
+values('活死人的呼声','红色')
+
+Insert into
+卡片(名字,颜色)
+values('电子终结龙','紫色')
+
+Insert into
+卡片(名字,颜色)
+values('异色眼灵摆龙','橙绿色')
+
+Insert into
+卡片(名字,颜色)
+values('命运英雄血魔D','橙色')
+
+Insert into
+卡片(名字,颜色)
+values('古代妖精龙','白色')
+
+Insert into
+卡片(名字,颜色)
+values('奥利哈刚反射镜','绿色')
+
+Insert into
+卡片(名字,颜色)
+values('星尘龙','白色')
+
+Insert into
+卡片(名字,颜色)
+values('废品同调士','橙色')
+
+Insert into
+卡片(名字,颜色)
+values('超量变身战术','绿色')
+
+Insert into
+卡片(名字,颜色)
+values('No.39 希望皇霍普','黑色')
+
+Insert into
+卡片(名字,颜色)
+values('青眼白龙','黄色')
+
+Insert into
+卡片(名字,颜色)
+values('奥利哈刚的结界','绿色')
+
+Insert into
+卡片(名字,颜色)
+values('元素英雄新宇侠','黄色')
+
+Insert into
+卡片(名字,颜色)
+values('电子龙','橙色')
+
+Insert into
+卡片(名字,颜色)
+values('妖精龙古代妖','白色')
+
+Insert into
+卡片(名字,颜色)
+values('被封印的左足','黄色')
+
+Insert into
+卡片(名字,颜色)
+values('时读之魔术师','橙绿色')
+
+Insert into
+卡片(名字,颜色)
+values('霸王黑龙异色眼叛逆龙','黑绿色')
+
+Insert into
+卡片(名字,颜色)
+values('缎带栗子','橙色')
+
+Insert into
+卡片(名字,颜色)
+values('漆黑的斗龙','橙色')
+
+Insert into
+卡片(名字,颜色)
+values('流天类星龙','白色')
+
+Insert into
+卡片(名字,颜色)
+values('旋风','绿色')
+
+Insert into
+卡片(名字,颜色)
+values('融合','绿色')
+
+Insert into
+卡片(名字,颜色)
+values('融合解除','绿色')
+
+Insert into
+卡片(名字,颜色)
+values('黑洞','绿色')
+
+Insert into
+卡片(名字,颜色)
+values('破坏轮','红色')
+
+Insert into
+卡片(名字,颜色)
+values('攻击无力化','红色')
+
+Insert into
+卡片(名字,颜色)
+values('超量苏生','红色')
+
+Insert into
+卡片(名字,颜色)
+values('废铁稻草人','红色')
+
+Insert into
+卡片(名字,颜色)
+values('强制终了','红色')
+
+Insert into
+卡片(名字,颜色)
+values('魔法筒','红色')
+
+Insert into
+卡片(名字,颜色)
+values('盗贼的七道具','红色')
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('黑魔术卡组','黑魔术师','被封印的左足') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('黑魔术卡组','黑魔术师','神圣防护罩-反射镜力') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('黑魔术卡组','黑魔术师','死者苏生') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('青眼卡组','青眼白龙','死者苏生') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('青眼卡组','青眼白龙','漆黑的斗龙') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('青眼卡组','青眼白龙','巨大化') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('奥利哈刚卡组','奥利哈刚的结界','奥利哈刚反射镜') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('奥利哈刚卡组','奥利哈刚的结界','镜子骑士之呼唤') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('元素英雄卡组','元素英雄新宇侠','超融合') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('元素英雄卡组','元素英雄新宇侠','神之宣告') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('电子流卡组','电子龙','电子终结龙') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('电子流卡组','电子龙','活死人的呼声') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('命运英雄卡组','命运英雄血魔D','幽狱之时计塔') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('同调士卡组','星尘龙','废品同调士') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('同调士卡组','星尘龙','流天类星龙') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('妖精卡组','古代妖精龙','妖精龙古代妖') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('妖精卡组','古代妖精龙','缎带栗子') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('希望皇卡组','No.39 希望皇霍普','超量变身战术') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('希望皇卡组','No.39 希望皇霍普','我我我枪手') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('娱乐伙伴卡组','异色眼灵摆龙','时读之魔术师') 
+
+Insert into
+包含(卡组名称,卡组核心,名字)
+values('娱乐伙伴卡组','异色眼灵摆龙','霸王黑龙异色眼叛逆龙') 
+
+Insert into
+拥有(姓名,名字)
+values('武藤游戏','黑魔术师')
+
+Insert into
+拥有(姓名,名字)
+values('武藤游戏','神圣防护罩-反射镜力')
+
+Insert into
+拥有(姓名,名字)
+values('武藤游戏','死者苏生')
+
+Insert into
+拥有(姓名,名字)
+values('海马濑人','死者苏生')
+
+Insert into
+拥有(姓名,名字)
+values('海马濑人','青眼白龙')
+
+Insert into
+拥有(姓名,名字)
+values('达兹','奥利哈刚的结界')
+
+Insert into
+拥有(姓名,名字)
+values('达兹','奥利哈刚反射镜')
+
+Insert into
+拥有(姓名,名字)
+values('达兹','镜子骑士之呼唤')
+
+Insert into
+拥有(姓名,名字)
+values('游城十代','元素英雄新宇侠')
+
+Insert into
+拥有(姓名,名字)
+values('游城十代','超融合')
+
+Insert into
+拥有(姓名,名字)
+values('丸藤亮','电子龙')
+
+Insert into
+拥有(姓名,名字)
+values('丸藤亮','电子终结龙')
+
+Insert into
+拥有(姓名,名字)
+values('爱德菲尼克斯','命运英雄血魔D')
+
+Insert into
+拥有(姓名,名字)
+values('爱德菲尼克斯','幽狱之时计塔')
+
+Insert into
+拥有(姓名,名字)
+values('不动游星','星尘龙')
+
+Insert into
+拥有(姓名,名字)
+values('不动游星','流天类星龙')
+
+Insert into
+拥有(姓名,名字)
+values('龙可','古代妖精龙')
+
+Insert into
+拥有(姓名,名字)
+values('龙可','缎带栗子')
+
+Insert into
+拥有(姓名,名字)
+values('九十九游马','超量变身战术')
+
+Insert into
+拥有(姓名,名字)
+values('九十九游马','No.39 希望皇霍普')
+
+Insert into
+拥有(姓名,名字)
+values('榊游矢','异色眼灵摆龙')
+
+Insert into
+拥有(姓名,名字)
+values('榊游矢','霸王黑龙异色眼叛逆龙')
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('黑魔术师','通常怪兽','黄色',2500,2100)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('青眼白龙','通常怪兽','黄色',3000,2100)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('镜子骑士之呼唤','仪式怪兽','蓝色',0,0)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('我我我枪手','超量怪兽','黑色',1500,2400)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('电子终结龙','融合怪兽','紫色',4000,2800)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('异色眼灵摆龙','灵摆怪兽','橙绿色',2500,2000)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('命运英雄血魔D','效果怪兽','橙色',1900,600)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('古代妖精龙','同调怪兽','白色',2100,3000)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('星尘龙','同调怪兽','白色',2500,2000)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('No.39 希望皇霍普','超量怪兽','黑色',2500,2000)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('废品同调士','调整怪兽','橙色',1300,500)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('元素英雄新宇侠','通常怪兽','黄色',2500,2000)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('电子龙','效果怪兽','橙色',2100,1600)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('妖精龙古代妖','同调怪兽','白色',2100,3000)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('被封印的左足','通常怪兽','黄色',200,300)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('漆黑的斗龙','同盟怪兽','橙色',900,600)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('缎带栗子','效果怪兽','橙色',300,200)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('时读之魔术师','灵摆怪兽','橙绿色',1200,600)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('霸王黑龙异色眼叛逆龙','超量/灵摆怪兽','黑绿色',3000,2500)
+
+Insert into
+怪兽卡(名字,种类,颜色,攻击力,守备力)
+values('流天类星龙','同调怪兽','白色',4000,4000)
+
+Insert into
+魔法卡(名字,种类,颜色)
+values('死者苏生','通常魔法','绿色')
+
+Insert into
+魔法卡(名字,种类,颜色)
+values('奥利哈刚的结界','场地魔法','绿色')
+
+Insert into
+魔法卡(名字,种类,颜色)
+values('超量变身战术','永续魔法','绿色')
+
+Insert into
+魔法卡(名字,种类,颜色)
+values('幽狱之时计塔','场地魔法','绿色')
+
+Insert into
+魔法卡(名字,种类,颜色)
+values('奥利哈刚反射镜','仪式魔法','绿色')
+
+Insert into
+魔法卡(名字,种类,颜色)
+values('超融合','速攻魔法','绿色')
+
+Insert into
+魔法卡(名字,种类,颜色)
+values('巨大化','装备魔法','绿色')
+
+Insert into
+魔法卡(名字,种类,颜色)
+values('黑洞','通常魔法','绿色')
+
+Insert into
+魔法卡(名字,种类,颜色)
+values('融合','通常魔法','绿色')
+
+Insert into
+魔法卡(名字,种类,颜色)
+values('融合解除','速攻魔法','绿色')
+
+Insert into
+魔法卡(名字,种类,颜色)
+values('旋风','速攻魔法','绿色')
+
+Insert into
+陷阱卡(名字,种类,颜色)
+values('神圣防护罩-反射镜力','通常陷阱','红色')
+
+Insert into
+陷阱卡(名字,种类,颜色)
+values('活死人的呼声','永续陷阱','红色')
+
+Insert into
+陷阱卡(名字,种类,颜色)
+values('神之宣告','反击陷阱','红色')
+
+Insert into
+陷阱卡(名字,种类,颜色)
+values('破坏轮','通常陷阱','红色')
+
+Insert into
+陷阱卡(名字,种类,颜色)
+values('攻击无力化','反击陷阱','红色')
+
+Insert into
+陷阱卡(名字,种类,颜色)
+values('魔法筒','通常陷阱','红色')
+
+Insert into
+陷阱卡(名字,种类,颜色)
+values('盗贼的七道具','反击陷阱','红色')
+
+Insert into
+陷阱卡(名字,种类,颜色)
+values('废铁稻草人','通常陷阱','红色')
+
+Insert into
+陷阱卡(名字,种类,颜色)
+values('强制终了','永续陷阱','红色')
+
+Insert into
+陷阱卡(名字,种类,颜色)
+values('超量苏生','通常陷阱','红色')
+
